@@ -29,7 +29,7 @@ class ScanController extends GetxController {
   var isCameraInitialized = false.obs;
   var cameraCount = 0;
 
-  var x, y, w, h = 0.0;
+  var x = 0.0, y = 0.0, w = 0.0, h = 0.0;
   var label = "";
 
   initCamera() async {
@@ -89,17 +89,16 @@ class ScanController extends GetxController {
       threshold: 0.4,
     );
 
-    if (detector != null) {
+    if (detector != null && detector.isNotEmpty) {
       var outDetectedObkect = detector.first;
       if (outDetectedObkect['confidenceInClass'] * 100 > 45) {
         label = detector.first['detectedClass'].toString();
         h = outDetectedObkect['react']['h'];
+        w = outDetectedObkect['react']['w'];
         x = outDetectedObkect['react']['x'];
         y = outDetectedObkect['react']['y'];
-        w = outDetectedObkect['react']['w'];
-        
       }
-        update(); 
+      update();
     }
   }
 }
